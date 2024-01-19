@@ -60,6 +60,8 @@ var configuration = new MapperConfiguration(cfg =>
     cfg.AddProfile<StockReportMapper>();
     cfg.AddProfile<ProducerOrderMapper>();
     cfg.AddProfile<SaleMapper>();
+    cfg.AddProfile<ReviewMapper>();
+    cfg.AddProfile<ProductCostumerMapper>();
 
 });
 var mapper = configuration.CreateMapper();

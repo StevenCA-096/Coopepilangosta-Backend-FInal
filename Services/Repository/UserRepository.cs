@@ -27,7 +27,7 @@ namespace Services.Repository
 
         public async Task<object> Login(string email,string password)
         {
-            User userFound = _context.users.Include(user => user.role).Where(user => user.Email == email).FirstOrDefault();
+            User userFound = _context.user.Include(user => user.role).Where(user => user.Email == email).FirstOrDefault();
 
             SecurityToken token = null;
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -72,7 +72,7 @@ namespace Services.Repository
             byte[] encryted = System.Text.Encoding.Unicode.GetBytes(password);
             result = Convert.ToBase64String(encryted);
 
-            User user = _context.users.Include(u=>u.role)
+            User user = _context.user.Include(u=>u.role)
                 .Include(user => user.costumer).ThenInclude(c => c.costumersContacts)
                 .Include(u=>u.employee)
                 .Where(user => user.Email == email && user.Password == result)
@@ -88,7 +88,7 @@ namespace Services.Repository
         }
 
         public string getChangePasswordToken(string email) { 
-            User user = _context.users.Where(u => u.Email == email).FirstOrDefault();
+            User user = _context.user.Where(u => u.Email == email).FirstOrDefault();
             SecurityToken token = null;
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -114,7 +114,7 @@ namespace Services.Repository
         }
 
         public Task<User> getUserById(int id) {
-            User user = _context.users.Include(u => u.role)
+            User user = _context.user.Include(u => u.role)
                 .Include(user => user.costumer).ThenInclude(c => c.costumersContacts)
                 .Include(u => u.employee)
                 .Where(user => user.Id == id)
@@ -129,7 +129,7 @@ namespace Services.Repository
         }
 
         public string ChangePassword(string email, string newPassword) {
-            User user = _context.users.Where(u =>u.Email == email).FirstOrDefault();
+            User user = _context.user.Where(u =>u.Email == email).FirstOrDefault();
             string result = string.Empty;
             byte[] encryted = System.Text.Encoding.Unicode.GetBytes(newPassword);
             result = Convert.ToBase64String(encryted);
@@ -140,7 +140,7 @@ namespace Services.Repository
         }
 
         public bool checkEmailExistence(string email) {
-            var foundUser = _context.users.FirstOrDefault(user => user.Email == email);
+            var foundUser = _context.user.FirstOrDefault(user => user.Email == email);
             if (foundUser == null)
             {
                 return true;

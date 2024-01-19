@@ -1,5 +1,6 @@
 ﻿
 using DataAccess.Data;
+using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,6 +36,10 @@ namespace DataAccess
 
             services.AddScoped<ICostumerContactRepository, CostumerContactRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+            services.AddScoped<IProductCostumerRepository, ProductCostumerRepository>();
+
+
             return services;
         }
 

@@ -25,11 +25,13 @@ namespace DataAccess.Models
         public string image { get; set; }
         public Category Category { get; set; }
         public List<ProductProducer> productsproducers { get; set; }
+        public List<ProductCostumer> productscostumers { get; set; }
         public List<Entry> entries { get; set; }
         public List<Purchase> purchases { get; set; }
         public List<Foresight> foresights { get; set; }
         public List<Sale> sales { get; set; }
         public List<StockReport> stocks { get; set; }
+        public List<Review> reviews { get; set; }
 
 
     }

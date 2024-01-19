@@ -40,7 +40,10 @@ namespace DataAccess.DTO
                 .ForMember(dest => dest.Category, opt => opt.Ignore())
                 .ForMember(dest => dest.entries, opt => opt.Ignore())
                 .ForMember(dest => dest.purchases, opt => opt.Ignore())
-                .ForMember(dest => dest.productsproducers, opt => opt.Ignore());
+                .ForMember(dest => dest.reviews, opt => opt.Ignore())
+                .ForMember(dest => dest.productsproducers, opt => opt.Ignore())
+                .ForMember(dest => dest.productscostumers, opt => opt.Ignore());
+
         }
     }
 }
