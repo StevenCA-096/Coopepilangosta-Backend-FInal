@@ -9,6 +9,7 @@ namespace Services.IRepository
 {
     public interface IReviewRepository: IGenericRepository<Review>
     {
+        public IEnumerable<Review> GetAllData(int productid);
 
     }
 }
