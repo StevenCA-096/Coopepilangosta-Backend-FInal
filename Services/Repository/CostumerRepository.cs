@@ -49,10 +49,10 @@ namespace Services.Repository
              var costumerFound = _context.costumers.FirstOrDefault(costumer => costumer.cedulaJuridica == cedula);
             if (costumerFound == null)
             {
-                return false;
+                return true;
             }
             else { 
-                return true;
+                return false;
             }
         }
     }

@@ -19,6 +19,8 @@ namespace DataAccess.DTO
         public string address { get; set; }
         public int postalCode { get; set; }
         public string bankAccount { get; set; }
+        public string verified { get; set; }
+
 
         //relations
         public int userId { get; set; }
@@ -37,7 +39,11 @@ namespace DataAccess.DTO
                 .ForMember(dest => dest.address, opt => opt.MapFrom(src => src.address))
                 .ForMember(dest => dest.postalCode, opt => opt.MapFrom(src => src.postalCode))
                 .ForMember(dest => dest.bankAccount, opt => opt.MapFrom(src => src.bankAccount))
+                .ForMember(dest => dest.verified, opt => opt.MapFrom(src => src.verified))
                 .ForMember(dest => dest.costumersContacts, opt => opt.Ignore())
+                .ForMember(dest => dest.costumersorders, opt => opt.Ignore())
+                .ForMember(dest => dest.productscostumers, opt => opt.Ignore())
+                .ForMember(dest => dest.reviews, opt => opt.Ignore())
                 .ForMember(dest => dest.user, opt => opt.Ignore());
                 
         }

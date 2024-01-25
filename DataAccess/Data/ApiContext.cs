@@ -23,13 +23,16 @@ namespace DataAccess.Data
         public DbSet<Product> Product { get; set; } = default!;
         public DbSet<Warehouse> Warehouse { get; set; } = default!;
         public DbSet<ProductProducer> ProductProducer { get; set; } = default!;
+        public DbSet<ProductCostumer> ProductCostumer { get; set; } = default!;
         public DbSet<Purchase> Purchase { get; set; } = default!;
         public DbSet<ProducerOrder> ProducerOrder { get; set; } = default!;
         public DbSet<Entry> Entry { get; set; } = default!;
         public DbSet<Sale> Sale { get; set; } = default!;
         public DbSet<CostumerOrder> CostumerOrder { get; set; } = default!;
         public DbSet<StockReport> StockReport { get; set; } = default!;
-        public DbSet<User> users { get; set; } = default!;
+        //public DbSet<User> users { get; set; } = default!;
+        public DbSet<User> user { get; set; } = default!;
+        public DbSet<Review> review { get; set; } = default!;
         public DbSet<Role> role{ get; set; } = default!;
         public DbSet<Foresight> foresight { get; set; } = default!;
         public DbSet<ForesightProducer> foresightProducer { get; set; } = default!;
@@ -99,6 +102,22 @@ namespace DataAccess.Data
             .HasOne(product => product.Category)
             .WithMany(category => category.products)
             .HasForeignKey(k => k.CategoryId);
+
+            //Review
+
+            modelBuilder.Entity<Review>()
+            .HasOne(review => review.product)
+            .WithMany(product => product.reviews)
+            .HasForeignKey(k => k.ProductId);
+
+            modelBuilder.Entity<Review>()
+            .HasOne(review => review.costumer)
+            .WithMany(costumer => costumer.reviews)
+            .HasForeignKey(k => k.CostumerId);
+
+            modelBuilder.Entity<Review>()
+           .Property(a => a.ReviewDate)
+           .HasColumnType("date");
 
             //StockReport
 
@@ -236,6 +255,21 @@ namespace DataAccess.Data
                 .HasOne(ch => ch.Producer)
                 .WithMany(h => h.productsproducers)
                 .HasForeignKey(ch => ch.ProducerId);
+
+            //ProductCostumer
+
+            modelBuilder.Entity<ProductCostumer>()
+            .HasKey(ch => new { ch.ProductId, ch.CostumerId });
+
+            modelBuilder.Entity<ProductCostumer>()
+                .HasOne(ch => ch.Product)
+                .WithMany(c => c.productscostumers)
+                .HasForeignKey(ch => ch.ProductId);
+
+            modelBuilder.Entity<ProductCostumer>()
+                .HasOne(ch => ch.Costumer)
+                .WithMany(h => h.productscostumers)
+                .HasForeignKey(ch => ch.CostumerId);
 
         }
 

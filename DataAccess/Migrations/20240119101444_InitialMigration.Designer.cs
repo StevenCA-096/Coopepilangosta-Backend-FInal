@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    [Migration("20231120054032_migranueva")]
-    partial class migranueva
+    [Migration("20240119101444_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,7 +83,13 @@ namespace DataAccess.Migrations
                     b.Property<int>("userId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("verified")
+                        .HasColumnType("bit");
+
                     b.HasKey("id");
+
+                    b.HasIndex("cedulaJuridica")
+                        .IsUnique();
 
                     b.HasIndex("userId")
                         .IsUnique();
@@ -190,6 +196,9 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("cedula")
+                        .IsUnique();
 
                     b.HasIndex("idUser")
                         .IsUnique();
@@ -332,6 +341,9 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Cedula")
+                        .IsUnique();
+
                     b.ToTable("Producer");
                 });
 
@@ -415,7 +427,32 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("Code")
+                        .IsUnique();
+
                     b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.ProductCostumer", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CostumerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("PurchasePrice")
+                        .HasColumnType("float");
+
+                    b.HasKey("ProductId", "CostumerId");
+
+                    b.HasIndex("CostumerId");
+
+                    b.ToTable("ProductCostumer");
                 });
 
             modelBuilder.Entity("DataAccess.Models.ProductProducer", b =>
@@ -463,6 +500,39 @@ namespace DataAccess.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Purchase");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CostumerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReviewDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("Stars")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CostumerId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("review");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Role", b =>
@@ -520,7 +590,7 @@ namespace DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CambioFecha")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -560,7 +630,7 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -574,6 +644,9 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.HasIndex("idRole");
 
@@ -603,6 +676,9 @@ namespace DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
 
                     b.ToTable("Warehouse");
                 });
@@ -730,6 +806,25 @@ namespace DataAccess.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("DataAccess.Models.ProductCostumer", b =>
+                {
+                    b.HasOne("DataAccess.Models.Costumer", "Costumer")
+                        .WithMany("productscostumers")
+                        .HasForeignKey("CostumerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataAccess.Models.Product", "Product")
+                        .WithMany("productscostumers")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Costumer");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("DataAccess.Models.ProductProducer", b =>
                 {
                     b.HasOne("DataAccess.Models.Producer", "Producer")
@@ -766,6 +861,25 @@ namespace DataAccess.Migrations
                     b.Navigation("ProducerOrder");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.Review", b =>
+                {
+                    b.HasOne("DataAccess.Models.Costumer", "costumer")
+                        .WithMany("reviews")
+                        .HasForeignKey("CostumerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataAccess.Models.Product", "product")
+                        .WithMany("reviews")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("costumer");
+
+                    b.Navigation("product");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Sale", b =>
@@ -819,6 +933,10 @@ namespace DataAccess.Migrations
                     b.Navigation("costumersContacts");
 
                     b.Navigation("costumersorders");
+
+                    b.Navigation("productscostumers");
+
+                    b.Navigation("reviews");
                 });
 
             modelBuilder.Entity("DataAccess.Models.CostumerOrder", b =>
@@ -853,9 +971,13 @@ namespace DataAccess.Migrations
 
                     b.Navigation("foresights");
 
+                    b.Navigation("productscostumers");
+
                     b.Navigation("productsproducers");
 
                     b.Navigation("purchases");
+
+                    b.Navigation("reviews");
 
                     b.Navigation("sales");
 
