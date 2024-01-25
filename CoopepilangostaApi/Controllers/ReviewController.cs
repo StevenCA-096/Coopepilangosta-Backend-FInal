@@ -2,6 +2,7 @@
 using DataAccess.DTO;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Services.IRepository;
 using Services.Repository;
 
@@ -21,15 +22,9 @@ namespace CoopepilangostaApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Review> Get()
-        {        
-            return _reviewRepository.GetAll();
-        }
-
-        [HttpGet("{id}")]
-        public Review Get(int id)
+        public IEnumerable<Review> Get(int productid)
         {
-            return _reviewRepository.GetById(id);
+            return _reviewRepository.GetAllData(productid);
         }
 
         [HttpPost]
