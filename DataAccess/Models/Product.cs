@@ -14,7 +14,6 @@ namespace DataAccess.Models
         public string Description { get; set; }
         public int Stock { get; set; } 
         public string Unit { get; set; }
-        //public double Price { get; set; }
         public double Margin { get; set; }
         public double Iva { get; set; }
         public bool State { get; set; } 

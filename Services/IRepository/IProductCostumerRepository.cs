@@ -9,6 +9,8 @@ namespace Services.IRepository
 {
     public interface IProductCostumerRepository : IGenericRepository<ProductCostumer>
     {
-        public Task<ProductCostumer> ObtainPurchasePrice(int ProductId, int CostumerId);
+        public IEnumerable<ProductCostumer> GetById(int productId, int costumerId);
+        public IEnumerable<ProductCostumer> GetAllData(int costumerId);
+
     }
 }
