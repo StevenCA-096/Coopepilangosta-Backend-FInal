@@ -16,6 +16,8 @@ namespace DataAccess.Models
         public double PurchasePrice { get; set; }
         public string Description { get; set; }
         public double Margin { get; set; }
+        public string Unit { get; set; }
+
 
     }
 }
