@@ -9,7 +9,7 @@ namespace Services.IRepository
 {
     public interface IProductCostumerRepository : IGenericRepository<ProductCostumer>
     {
-        public IEnumerable<ProductCostumer> GetById(int productId, int costumerId);
+        public IEnumerable<ProductCostumer> GetByBothId(int productId, int costumerId);
         public IEnumerable<ProductCostumer> GetAllData(int costumerId);
 
     }

@@ -19,7 +19,7 @@ namespace Services.Repository
             _context = context;
         }
 
-        public IEnumerable<ProductCostumer> GetById(int productId, int costumerId)
+        public IEnumerable<ProductCostumer> GetByBothId(int productId, int costumerId)
         {
 
             var productcostumers = _context.ProductCostumer.Where(atb => atb.ProductId == productId && atb.CostumerId == costumerId).ToList();

@@ -28,9 +28,15 @@ namespace CoopepilangostaApi.Controllers
         }
 
         [HttpGet("{productId},{costumerId}")]
-        public IEnumerable<ProductCostumer> GetById(int productId, int costumerId)
+        public IEnumerable<ProductCostumer> GetByBothId(int productId, int costumerId)
         {
-            return _productcostumerRepository.GetById(productId, costumerId);
+            return _productcostumerRepository.GetByBothId(productId, costumerId);
+        }
+
+        [HttpGet("{id}")]
+        public ProductCostumer GetById(int id)
+        {
+            return _productcostumerRepository.GetById(id);
         }
 
         [HttpPost]
