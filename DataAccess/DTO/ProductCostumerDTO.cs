@@ -31,7 +31,8 @@ namespace DataAccess.DTO
                 .ForMember(dest => dest.Margin, opt => opt.MapFrom(src => src.Margin))
                 .ForMember(dest => dest.Unit, opt => opt.MapFrom(src => src.Unit))
                 .ForMember(dest => dest.Product, opt => opt.Ignore())
-                .ForMember(dest => dest.Costumer, opt => opt.Ignore());        
+                .ForMember(dest => dest.Costumer, opt => opt.Ignore())
+                .ForMember(dest => dest.sales, opt => opt.Ignore());
         }
     }
 }

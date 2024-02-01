@@ -19,5 +19,8 @@ namespace DataAccess.Models
         public Product Product { get; set; }
         public int CostumerOrderId { get; set; }
         public CostumerOrder CostumerOrder { get; set; }
+        public int ProductCostumerId { get; set; }
+        public ProductCostumer ProductCostumer { get; set; }
+
     }
 }

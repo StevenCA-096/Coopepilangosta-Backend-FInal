@@ -18,6 +18,9 @@ namespace DataAccess.Models
         public double Margin { get; set; }
         public string Unit { get; set; }
 
+        //Relaciones
+        public List<Sale> sales { get; set; }
+
 
     }
 }
