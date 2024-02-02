@@ -414,14 +414,18 @@ namespace DataAccess.Migrations
                 name: "ProductCostumer",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     CostumerId = table.Column<int>(type: "int", nullable: false),
                     PurchasePrice = table.Column<double>(type: "float", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Margin = table.Column<double>(type: "float", nullable: false),
+                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductCostumer", x => new { x.ProductId, x.CostumerId });
+                    table.PrimaryKey("PK_ProductCostumer", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ProductCostumer_Product_ProductId",
                         column: x => x.ProductId,
@@ -474,7 +478,8 @@ namespace DataAccess.Migrations
                     Quantity = table.Column<double>(type: "float", nullable: false),
                     PurchaseTotal = table.Column<double>(type: "float", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    CostumerOrderId = table.Column<int>(type: "int", nullable: false)
+                    CostumerOrderId = table.Column<int>(type: "int", nullable: false),
+                    ProductCostumerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -483,6 +488,12 @@ namespace DataAccess.Migrations
                         name: "FK_Sale_CostumerOrder_CostumerOrderId",
                         column: x => x.CostumerOrderId,
                         principalTable: "CostumerOrder",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Sale_ProductCostumer_ProductCostumerId",
+                        column: x => x.ProductCostumerId,
+                        principalTable: "ProductCostumer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -585,6 +596,11 @@ namespace DataAccess.Migrations
                 column: "CostumerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductCostumer_ProductId",
+                table: "ProductCostumer",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductProducer_ProducerId",
                 table: "ProductProducer",
                 column: "ProducerId");
@@ -613,6 +629,11 @@ namespace DataAccess.Migrations
                 name: "IX_Sale_CostumerOrderId",
                 table: "Sale",
                 column: "CostumerOrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sale_ProductCostumerId",
+                table: "Sale",
+                column: "ProductCostumerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sale_ProductId",
@@ -658,9 +679,6 @@ namespace DataAccess.Migrations
                 name: "foresightProducer");
 
             migrationBuilder.DropTable(
-                name: "ProductCostumer");
-
-            migrationBuilder.DropTable(
                 name: "ProductProducer");
 
             migrationBuilder.DropTable(
@@ -688,10 +706,13 @@ namespace DataAccess.Migrations
                 name: "CostumerOrder");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "ProductCostumer");
 
             migrationBuilder.DropTable(
                 name: "Producer");
+
+            migrationBuilder.DropTable(
+                name: "Product");
 
             migrationBuilder.DropTable(
                 name: "costumers");
