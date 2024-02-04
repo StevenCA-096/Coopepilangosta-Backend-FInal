@@ -15,6 +15,8 @@ namespace DataAccess.Models
         public DateTime DeliveredDate { get; set; }
         public string Detail { get; set; }
         public string Stage { get; set; }
+        public string Address { get; set; }
+
 
         //Relaciones
 

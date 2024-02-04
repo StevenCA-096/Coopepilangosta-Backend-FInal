@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    [Migration("20240202013253_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240204031357_ProductOrderAddress")]
+    partial class ProductOrderAddress
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,6 +104,10 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ConfirmedDate")
                         .HasColumnType("date");
@@ -578,9 +582,6 @@ namespace DataAccess.Migrations
                     b.Property<int>("CostumerOrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductCostumerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
@@ -590,11 +591,16 @@ namespace DataAccess.Migrations
                     b.Property<double>("Quantity")
                         .HasColumnType("float");
 
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CostumerOrderId");
-
-                    b.HasIndex("ProductCostumerId");
 
                     b.HasIndex("ProductId");
 
@@ -910,12 +916,6 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Models.ProductCostumer", "ProductCostumer")
-                        .WithMany("sales")
-                        .HasForeignKey("ProductCostumerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("DataAccess.Models.Product", "Product")
                         .WithMany("sales")
                         .HasForeignKey("ProductId")
@@ -925,8 +925,6 @@ namespace DataAccess.Migrations
                     b.Navigation("CostumerOrder");
 
                     b.Navigation("Product");
-
-                    b.Navigation("ProductCostumer");
                 });
 
             modelBuilder.Entity("DataAccess.Models.StockReport", b =>
@@ -1010,11 +1008,6 @@ namespace DataAccess.Migrations
                     b.Navigation("sales");
 
                     b.Navigation("stocks");
-                });
-
-            modelBuilder.Entity("DataAccess.Models.ProductCostumer", b =>
-                {
-                    b.Navigation("sales");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Role", b =>

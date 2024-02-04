@@ -17,6 +17,7 @@ namespace DataAccess.DTO
         public DateTime DeliveredDate { get; set; }
         public string Detail { get; set; }
         public string Stage { get; set; }
+        public string Address { get; set; }
 
 
         public class CostumerOrderMapper : Profile
@@ -31,6 +32,7 @@ namespace DataAccess.DTO
                     .ForMember(dest => dest.DeliveredDate, opt => opt.MapFrom(src => src.DeliveredDate))
                     .ForMember(dest => dest.Detail, opt => opt.MapFrom(src => src.Detail))
                     .ForMember(dest => dest.Stage, opt => opt.MapFrom(src => src.Stage))
+                    .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
 
                     //.ForMember(dest => dest.Paid, opt => opt.Ignore())
                     //.ForMember(dest => dest.Delivered, opt => opt.Ignore())

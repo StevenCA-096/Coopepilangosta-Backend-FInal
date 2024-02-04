@@ -14,6 +14,8 @@ namespace DataAccess.DTO
         public double Quantity { get; set; }
         public double PurchaseTotal { get; set; }
         public int CostumerOrderId { get; set; }
+        public double UnitPrice { get; set; }
+        public string Unit { get; set; }
 
     }
 
@@ -26,6 +28,8 @@ namespace DataAccess.DTO
                 .ForMember(dest => dest.PurchaseTotal, opt => opt.MapFrom(src => src.PurchaseTotal))
                 .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
                 .ForMember(dest => dest.CostumerOrderId, opt => opt.MapFrom(src => src.CostumerOrderId))
+                .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+                .ForMember(dest => dest.Unit, opt => opt.MapFrom(src => src.Unit))
                 .ForMember(dest => dest.Product, opt => opt.Ignore())
                 .ForMember(dest => dest.CostumerOrder, opt => opt.Ignore());
         }
