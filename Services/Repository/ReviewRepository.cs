@@ -24,5 +24,13 @@ namespace Services.Repository
             var reviews = _context.review.Where(e => e.ProductId == productid).ToList();
             return reviews;
         }
+
+        public double GetAverage(int productid)
+        {
+
+            var avrg = _context.review.Where(e => e.ProductId == productid).Average(e => e.Stars);
+            return avrg;
+        }
+
     }
 }

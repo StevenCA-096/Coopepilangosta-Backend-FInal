@@ -33,9 +33,15 @@ namespace Services.Repository
             var sales = new List<Sale>();
             var filteredsales = new List<FilteredSaleDTO>();
 
+            if (id > 0)
+            {
                 sales = _context.Sale.Where(e => e.ProductId == id).ToList();
+            } else
+            {
+                sales = _context.Sale.ToList();
+            }
 
-                foreach (var sale in sales){
+            foreach (var sale in sales){
 
                  var costumerorder = _context.CostumerOrder.Include(cosdorder => cosdorder.sales)
                 .ThenInclude(sale => sale.Product)

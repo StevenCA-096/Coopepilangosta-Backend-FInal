@@ -53,5 +53,12 @@ namespace CoopepilangostaApi.Controllers
             _reviewRepository.Delete(id);
             _reviewRepository.Save();
         }
+
+        [Route("Average")]
+        [HttpGet]
+        public IEnumerable<Review> GetStarsAverage(int productid)
+        {
+            return _reviewRepository.GetAllData(productid);
+        }
     }
 }

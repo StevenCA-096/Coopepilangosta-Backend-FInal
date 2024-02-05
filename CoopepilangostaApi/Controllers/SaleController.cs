@@ -7,6 +7,7 @@ using Services.Repository;
 
 namespace CoopepilangostaApi.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
     public class SaleController : ControllerBase
     {
@@ -24,21 +25,20 @@ namespace CoopepilangostaApi.Controllers
         //    return _saleRepository.GetAll();
         //}
 
-        [Route("api/FilteredByProduct")]
+        [Route("FilteredByProduct")]
         [HttpGet]
         public IEnumerable<FilteredSaleDTO> GetSalesByProduct(int productid)
         {
             return _saleRepository.GetSalesByProduct(productid);
         }
 
-        [Route("api/FilteredByOrder")]
+        [Route("FilteredByOrder")]
         [HttpGet]
         public IEnumerable<Sale> GetSalesByProducerOrder(int producerorderid)
         {
             return _saleRepository.GetSalesByProducerOrder(producerorderid);
         }
 
-        [Route("api/[controller]")]
         [HttpPost]
         public void Post([FromBody] SaleDTO saledto)
         {
