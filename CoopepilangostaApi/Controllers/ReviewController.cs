@@ -56,9 +56,9 @@ namespace CoopepilangostaApi.Controllers
 
         [Route("Average")]
         [HttpGet]
-        public IEnumerable<Review> GetStarsAverage(int productid)
+        public double GetStarsAverage(int productid)
         {
-            return _reviewRepository.GetAllData(productid);
+            return _reviewRepository.GetAverage(productid);
         }
     }
 }

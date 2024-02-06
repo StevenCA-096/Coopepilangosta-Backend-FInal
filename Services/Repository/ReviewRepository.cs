@@ -28,8 +28,25 @@ namespace Services.Repository
         public double GetAverage(int productid)
         {
 
-            var avrg = _context.review.Where(e => e.ProductId == productid).Average(e => e.Stars);
-            return avrg;
+            var review = _context.review.Where(e => e.ProductId == productid);
+            var reviewcount = review.Count();
+
+            if (reviewcount > 0)
+            {
+                int[] array = {
+
+                   (review.Count(e => e.Stars == 1)),
+                   (review.Count(e => e.Stars == 2)),
+                   (review.Count(e => e.Stars == 3)),
+                   (review.Count(e => e.Stars == 4)),
+                   (review.Count(e => e.Stars == 5))
+
+                   };
+
+                int AverageReview = Array.IndexOf(array, array.Max()) +1;
+                return AverageReview;
+            }
+            else return 0; 
         }
 
     }
