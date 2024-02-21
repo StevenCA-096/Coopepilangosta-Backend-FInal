@@ -22,27 +22,22 @@ namespace CoopepilangostaApi.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<ProductCostumer>> Get(int ProductId, int CostumerId)
+        public IEnumerable<ProductCostumer> Get(int costumerid)
         {
-            var PurchasePrice = await _productcostumerRepository.ObtainPurchasePrice(ProductId, CostumerId);
-            return PurchasePrice;
-
+            return _productcostumerRepository.GetAllData(costumerid);
         }
 
+        [HttpGet("{productId},{costumerId}")]
+        public IEnumerable<ProductCostumer> GetByBothId(int productId, int costumerId)
+        {
+            return _productcostumerRepository.GetByBothId(productId, costumerId);
+        }
 
-        //[HttpGet]
-        //public IEnumerable<ProductProducer> Get()
-        //{
-        //    return _productproductRepository.GetAll();
-        //}
-
-
-        //[HttpGet("{id}")]
-        //public ProductProducer Get(int id)
-        //{
-        //    return _productproductRepository.GetById(id);
-        //}
-
+        [HttpGet("{id}")]
+        public ProductCostumer GetById(int id)
+        {
+            return _productcostumerRepository.GetById(id);
+        }
 
         [HttpPost]
         public void Post([FromBody] ProductCostumerDTO productcostumerdto)
@@ -53,17 +48,15 @@ namespace CoopepilangostaApi.Controllers
             _productcostumerRepository.Save();
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Put(int ProductId, int CostumerId, ProductCostumerDTO productcostumerdto)
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] ProductCostumerDTO productcostumerdto)
         {
-            var existing = await _productcostumerRepository.ObtainPurchasePrice(ProductId, CostumerId);
+            var existing = _productcostumerRepository.GetById(id);
 
             _mapper.Map(productcostumerdto, existing);
 
             _productcostumerRepository.Update(existing);
             _productcostumerRepository.Save();
-
-            return NoContent();
         }
 
         [HttpDelete("{id}")]

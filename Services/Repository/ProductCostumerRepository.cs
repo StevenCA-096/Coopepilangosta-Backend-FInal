@@ -19,13 +19,17 @@ namespace Services.Repository
             _context = context;
         }
 
-        public async Task<ProductCostumer> ObtainPurchasePrice(int productId, int costumerId)
+        public IEnumerable<ProductCostumer> GetByBothId(int productId, int costumerId)
         {
 
-            ProductCostumer productcostumer = _context.ProductCostumer
-            .FirstOrDefault(atb => atb.ProductId == productId && atb.CostumerId == costumerId);
+            var productcostumers = _context.ProductCostumer.Where(atb => atb.ProductId == productId && atb.CostumerId == costumerId).ToList();
+            return productcostumers;
+        }
 
-            return productcostumer;
+        public IEnumerable<ProductCostumer> GetAllData(int costumerId)
+        {
+            var productcostumers = _context.ProductCostumer.Where(e => e.CostumerId == costumerId).ToList();
+            return productcostumers;
         }
 
     }

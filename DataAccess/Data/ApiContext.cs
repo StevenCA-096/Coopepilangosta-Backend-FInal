@@ -259,7 +259,11 @@ namespace DataAccess.Data
             //ProductCostumer
 
             modelBuilder.Entity<ProductCostumer>()
-            .HasKey(ch => new { ch.ProductId, ch.CostumerId });
+                .HasKey(ch => ch.Id); 
+
+            modelBuilder.Entity<ProductCostumer>()
+                .Property(ch => ch.Id)
+                .UseIdentityColumn(); 
 
             modelBuilder.Entity<ProductCostumer>()
                 .HasOne(ch => ch.Product)

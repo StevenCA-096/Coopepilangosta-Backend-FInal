@@ -3,6 +3,7 @@ using DataAccess.DTO;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using Services.IRepository;
+using Services.Repository;
 
 namespace CoopepilangostaApi.Controllers
 {
@@ -18,16 +19,24 @@ namespace CoopepilangostaApi.Controllers
             _mapper = mapper;
         }
 
+        //[HttpGet]
+        //public IEnumerable<Sale> Get()
+        //{
+        //    return _saleRepository.GetAll();
+        //}
+
+        [Route("FilteredByProduct")]
         [HttpGet]
-        public IEnumerable<Sale> Get()
-        {        
-            return _saleRepository.GetAll();
+        public IEnumerable<FilteredSaleDTO> GetSalesByProduct(int productid)
+        {
+            return _saleRepository.GetSalesByProduct(productid);
         }
 
-        [HttpGet("{id}")]
-        public Sale Get(int id)
+        [Route("FilteredByOrder")]
+        [HttpGet]
+        public IEnumerable<Sale> GetSalesByProducerOrder(int producerorderid)
         {
-            return _saleRepository.GetById(id);
+            return _saleRepository.GetSalesByProducerOrder(producerorderid);
         }
 
         [HttpPost]
@@ -36,26 +45,6 @@ namespace CoopepilangostaApi.Controllers
             var entry = _mapper.Map<SaleDTO, Sale>(saledto);
 
             _saleRepository.Insert(entry);
-            _saleRepository.Save();
-        }
-
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] SaleDTO saledto)
-        {
-
-            var existing = _saleRepository.GetById(id);
-
-            _mapper.Map(saledto, existing);
-
-            _saleRepository.Update(existing);
-            _saleRepository.Save();
-
-        }
-
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            _saleRepository.Delete(id);
             _saleRepository.Save();
         }
     }

@@ -11,7 +11,8 @@ namespace DataAccess.Models
         public int Id { get; set; }
         public double Quantity { get; set; }
         public double PurchaseTotal { get; set; }
-
+        public double UnitPrice { get; set; }
+        public string Unit { get; set; }
 
         //Relaciones
 
@@ -19,5 +20,6 @@ namespace DataAccess.Models
         public Product Product { get; set; }
         public int CostumerOrderId { get; set; }
         public CostumerOrder CostumerOrder { get; set; }
+
     }
 }

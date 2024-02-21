@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApiContext))]
-<<<<<<<< HEAD:DataAccess/Migrations/20240208004830_verification1.Designer.cs
-    [Migration("20240208004830_verification1")]
-    partial class verification1
-========
-    [Migration("20240202062107_InitialMigration")]
-    partial class InitialMigration
->>>>>>>> 79fc55428851aeb1a27252f7416e944c9012270d:DataAccess/Migrations/20240202062107_InitialMigration.Designer.cs
+    [Migration("20240204031357_ProductOrderAddress")]
+    partial class ProductOrderAddress
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,6 +104,10 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ConfirmedDate")
                         .HasColumnType("date");
@@ -677,7 +676,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("idRole");
 
-                    b.ToTable("users");
+                    b.ToTable("user");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Warehouse", b =>
