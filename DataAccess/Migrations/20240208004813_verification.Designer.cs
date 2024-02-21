@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    [Migration("20240119101444_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240208004813_verification")]
+    partial class verification
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,6 +84,9 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("verified")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("verifieda")
                         .HasColumnType("bit");
 
                     b.HasKey("id");
@@ -650,7 +653,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("idRole");
 
-                    b.ToTable("user");
+                    b.ToTable("users");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Warehouse", b =>
