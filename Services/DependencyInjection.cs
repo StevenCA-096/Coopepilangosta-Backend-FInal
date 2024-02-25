@@ -38,6 +38,8 @@ namespace DataAccess
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<IProductCostumerRepository, ProductCostumerRepository>();
+            services.AddScoped<IVolumeDiscountRepository, VolumeDiscountRepository>();
+
 
 
             return services;

@@ -10,6 +10,7 @@ using System.Text;
 using static DataAccess.DTO.ProducerOrderDTO;
 using static DataAccess.DTO.ForesightProducerDTO;
 using static DataAccess.DTO.CostumerOrderDTO;
+using Services.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +63,8 @@ var configuration = new MapperConfiguration(cfg =>
     cfg.AddProfile<SaleMapper>();
     cfg.AddProfile<ReviewMapper>();
     cfg.AddProfile<ProductCostumerMapper>();
+    cfg.AddProfile<VolumeDiscountMapper>();
+
 
 });
 var mapper = configuration.CreateMapper();
