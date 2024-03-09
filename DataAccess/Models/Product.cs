@@ -16,7 +16,9 @@ namespace DataAccess.Models
         public string Unit { get; set; }
         public double Margin { get; set; }
         public double Iva { get; set; }
-        public bool State { get; set; } 
+        public bool State { get; set; }
+        public bool Stockable { get; set; }
+
 
         //Relaciones
 

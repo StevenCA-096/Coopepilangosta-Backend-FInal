@@ -18,6 +18,8 @@ namespace DataAccess.DTO
         public double Margin { get; set; }
         public double Iva { get; set; }
         public bool State { get; set; }
+        public bool Stockable { get; set; }
+
         public int CategoryId { get; set; }
         public string image { get; set; }
     }
@@ -37,6 +39,8 @@ namespace DataAccess.DTO
                 .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State))
                 .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId))
                 .ForMember(dest => dest.image, opt => opt.MapFrom(src => src.image))
+                                .ForMember(dest => dest.Stockable, opt => opt.MapFrom(src => src.Stockable))
+
                 .ForMember(dest => dest.Category, opt => opt.Ignore())
                 .ForMember(dest => dest.entries, opt => opt.Ignore())
                 .ForMember(dest => dest.purchases, opt => opt.Ignore())

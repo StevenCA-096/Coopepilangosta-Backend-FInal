@@ -28,6 +28,13 @@ namespace CoopepilangostaApi.Controllers
             return _productRepository.GetAll();
         }
 
+        [Route("Coffee")]
+        [HttpGet]
+        public IEnumerable<Product> GetStocks()
+        {
+            return _productRepository.GetStocks();
+        }
+
         [HttpGet("{id}")]
         public Product Get(int id)
         {
@@ -37,6 +44,12 @@ namespace CoopepilangostaApi.Controllers
         [HttpGet("CheckCodeAvailability")]
         public bool CheckCodeAvailabilty(int code) {
             return _productRepository.checkProductCode(code);
+        }
+
+        [HttpGet("CheckStockAvailability")]
+        public bool CheckStockAvailability(int productid, int quantity)
+        {
+            return _productRepository.checkProductStock(productid, quantity);
         }
 
         [HttpPost]
