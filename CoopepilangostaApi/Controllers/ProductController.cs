@@ -90,7 +90,7 @@ namespace CoopepilangostaApi.Controllers
 
 
         [HttpPatch("{id}/UpdateStock")]
-        public IActionResult UpdateStock(int id, [FromBody] int NewStock)
+        public IActionResult UpdateStock(int id, int NewStock)
         {
             try
             {
