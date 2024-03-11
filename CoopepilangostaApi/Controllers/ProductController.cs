@@ -87,5 +87,32 @@ namespace CoopepilangostaApi.Controllers
             _productRepository.Delete(id);
             _productRepository.Save();
         }
+
+
+        [HttpPatch("{id}/UpdateStock")]
+        public IActionResult UpdateStock(int id, [FromBody] int NewStock)
+        {
+            try
+            {
+                var existingProduct = _productRepository.GetById(id);
+
+                if (existingProduct == null)
+                {
+                    return NotFound();
+                }
+
+                existingProduct.Stock = NewStock;
+
+                _productRepository.Update(existingProduct);
+                _productRepository.Save();
+
+                return Ok(existingProduct);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
