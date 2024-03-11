@@ -46,11 +46,32 @@ namespace CoopepilangostaApi.Controllers
             return _productRepository.checkProductCode(code);
         }
 
+        //[HttpGet("CheckStockAvailability")]
+        //public bool CheckStockAvailability(int productid, int quantity)
+        //{
+        //    return _productRepository.checkProductStock(productid, quantity);
+        //}
+
         [HttpGet("CheckStockAvailability")]
-        public bool CheckStockAvailability(int productid, int quantity)
+        public IActionResult CheckStockAvailability(int productid)
         {
-            return _productRepository.checkProductStock(productid, quantity);
+            try
+            {
+                var product = _productRepository.GetById(productid);
+
+                if (product == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(product.Stock);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
 
         [HttpPost]
         public IActionResult Post([FromBody] ProductDTO productdto)
