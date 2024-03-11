@@ -114,5 +114,30 @@ namespace CoopepilangostaApi.Controllers
             }
         }
 
+        [HttpPatch("{id}/ReduceStock")]
+        public IActionResult ReduceStock(int id, int NewStock)
+        {
+            try
+            {
+                var existingProduct = _productRepository.GetById(id);
+
+                if (existingProduct == null)
+                {
+                    return NotFound();
+                }
+
+                existingProduct.Stock = existingProduct.Stock - NewStock;
+
+                _productRepository.Update(existingProduct);
+                _productRepository.Save();
+
+                return Ok(existingProduct);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
