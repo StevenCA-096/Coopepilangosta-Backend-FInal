@@ -20,6 +20,8 @@ namespace DataAccess.Models
         public Product Product { get; set; }
         public int CostumerId { get; set; }
         public Costumer Costumer { get; set; }
+        public List<VolumeDiscount> volumediscounts { get; set; }
+
 
     }
 }

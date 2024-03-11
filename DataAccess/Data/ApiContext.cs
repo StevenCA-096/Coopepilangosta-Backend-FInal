@@ -39,9 +39,10 @@ namespace DataAccess.Data
         public DbSet<Costumer> costumers { get; set; } = default!;
         public DbSet<CostumersContact> costumersContacts { get; set; } = default!;
         public DbSet<Employee> employee { get; set; } = default!;
-        
 
-        
+        public DbSet<VolumeDiscount> volumeDiscount { get; set; } = default!;
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
                 //Avoid duplicated key values //
@@ -102,6 +103,14 @@ namespace DataAccess.Data
             .HasOne(product => product.Category)
             .WithMany(category => category.products)
             .HasForeignKey(k => k.CategoryId);
+
+            //VolumeDiscount
+
+            modelBuilder.Entity<VolumeDiscount>()
+            .HasOne(volumediscount => volumediscount.ProductCostumer)
+            .WithMany(productcostumer => productcostumer.volumediscounts)
+            .HasForeignKey(k => k.ProductCostumerId);
+            
 
             //Review
 

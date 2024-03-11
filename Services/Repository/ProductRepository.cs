@@ -29,5 +29,24 @@ namespace Services.Repository
                 return false;
             }
         }
+
+        public bool checkProductStock(int productid, int quantity)
+        {
+            var product = _context.Product.FirstOrDefault(product => product.Id == productid);
+            if (product.Stock >= quantity)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public IEnumerable<Product> GetStocks()
+        {
+            var stocks = _context.Product.Where(e => e.Stockable == true).ToList();
+            return stocks;
+        }
     }
 }

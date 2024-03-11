@@ -28,6 +28,13 @@ namespace CoopepilangostaApi.Controllers
             return _productRepository.GetAll();
         }
 
+        [Route("Coffee")]
+        [HttpGet]
+        public IEnumerable<Product> GetStocks()
+        {
+            return _productRepository.GetStocks();
+        }
+
         [HttpGet("{id}")]
         public Product Get(int id)
         {
@@ -38,6 +45,33 @@ namespace CoopepilangostaApi.Controllers
         public bool CheckCodeAvailabilty(int code) {
             return _productRepository.checkProductCode(code);
         }
+
+        //[HttpGet("CheckStockAvailability")]
+        //public bool CheckStockAvailability(int productid, int quantity)
+        //{
+        //    return _productRepository.checkProductStock(productid, quantity);
+        //}
+
+        [HttpGet("CheckStockAvailability")]
+        public IActionResult CheckStockAvailability(int productid)
+        {
+            try
+            {
+                var product = _productRepository.GetById(productid);
+
+                if (product == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(product.Stock);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         [HttpPost]
         public IActionResult Post([FromBody] ProductDTO productdto)
@@ -74,5 +108,57 @@ namespace CoopepilangostaApi.Controllers
             _productRepository.Delete(id);
             _productRepository.Save();
         }
+
+
+        [HttpPatch("{id}/UpdateStock")]
+        public IActionResult UpdateStock(int id, int NewStock)
+        {
+            try
+            {
+                var existingProduct = _productRepository.GetById(id);
+
+                if (existingProduct == null)
+                {
+                    return NotFound();
+                }
+
+                existingProduct.Stock = NewStock;
+
+                _productRepository.Update(existingProduct);
+                _productRepository.Save();
+
+                return Ok(existingProduct);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPatch("{id}/ReduceStock")]
+        public IActionResult ReduceStock(int id, int NewStock)
+        {
+            try
+            {
+                var existingProduct = _productRepository.GetById(id);
+
+                if (existingProduct == null)
+                {
+                    return NotFound();
+                }
+
+                existingProduct.Stock = existingProduct.Stock - NewStock;
+
+                _productRepository.Update(existingProduct);
+                _productRepository.Save();
+
+                return Ok(existingProduct);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
