@@ -122,6 +122,12 @@ namespace CoopepilangostaApi.Controllers
                     return NotFound();
                 }
 
+                if (existingProduct.Stockable == false)
+                {
+                    existingProduct.Stockable = true;
+                }
+
+               
                 existingProduct.Stock = NewStock;
 
                 _productRepository.Update(existingProduct);
