@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    [Migration("20240204031357_ProductOrderAddress")]
-    partial class ProductOrderAddress
+    [Migration("20240319174759_NewFields")]
+    partial class NewFields
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,9 +69,16 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("phoneNumber")
+                        .HasColumnType("int");
 
                     b.Property<int>("postalCode")
                         .HasColumnType("int");
@@ -419,6 +426,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Stockable")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Unit")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -677,6 +687,30 @@ namespace DataAccess.Migrations
                     b.HasIndex("idRole");
 
                     b.ToTable("user");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.VolumeDiscount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ProductCostumerId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Volume")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductCostumerId");
+
+                    b.ToTable("volumeDiscount");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Warehouse", b =>
@@ -949,6 +983,17 @@ namespace DataAccess.Migrations
                     b.Navigation("role");
                 });
 
+            modelBuilder.Entity("DataAccess.Models.VolumeDiscount", b =>
+                {
+                    b.HasOne("DataAccess.Models.ProductCostumer", "ProductCostumer")
+                        .WithMany("volumediscounts")
+                        .HasForeignKey("ProductCostumerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductCostumer");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Category", b =>
                 {
                     b.Navigation("products");
@@ -1008,6 +1053,11 @@ namespace DataAccess.Migrations
                     b.Navigation("sales");
 
                     b.Navigation("stocks");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.ProductCostumer", b =>
+                {
+                    b.Navigation("volumediscounts");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Role", b =>

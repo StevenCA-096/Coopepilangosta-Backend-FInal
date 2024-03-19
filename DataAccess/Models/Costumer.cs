@@ -18,7 +18,8 @@ namespace DataAccess.Models
         public int postalCode { get; set; }
         public string bankAccount { get; set; }
         public bool verified { get; set; }
-
+        public int phoneNumber { get; set; }
+        public string email { get; set; }
 
         //relations
         public int userId { get; set; }

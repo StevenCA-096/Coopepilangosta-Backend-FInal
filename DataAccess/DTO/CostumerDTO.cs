@@ -20,7 +20,8 @@ namespace DataAccess.DTO
         public int postalCode { get; set; }
         public string bankAccount { get; set; }
         public string verified { get; set; }
-
+        public int phoneNumber { get; set; }
+        public string email { get; set; }
 
         //relations
         public int userId { get; set; }
@@ -40,6 +41,10 @@ namespace DataAccess.DTO
                 .ForMember(dest => dest.postalCode, opt => opt.MapFrom(src => src.postalCode))
                 .ForMember(dest => dest.bankAccount, opt => opt.MapFrom(src => src.bankAccount))
                 .ForMember(dest => dest.verified, opt => opt.MapFrom(src => src.verified))
+
+                .ForMember(dest => dest.phoneNumber, opt => opt.MapFrom(src => src.phoneNumber))
+                .ForMember(dest => dest.email, opt => opt.MapFrom(src => src.email))
+
                 .ForMember(dest => dest.costumersContacts, opt => opt.Ignore())
                 .ForMember(dest => dest.costumersorders, opt => opt.Ignore())
                 .ForMember(dest => dest.productscostumers, opt => opt.Ignore())
