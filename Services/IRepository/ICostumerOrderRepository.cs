@@ -9,5 +9,7 @@ namespace Services.IRepository
 {
     public interface ICostumerOrderRepository : IGenericRepository<CostumerOrder>
     {
+        public IEnumerable<CostumerOrder> GetAllData(int id);
+
     }
 }

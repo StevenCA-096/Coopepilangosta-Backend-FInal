@@ -14,6 +14,16 @@ namespace Services.Repository
         public CostumerOrderRepository(ApiContext context) : base(context)
         {
 
+            _context = context;
+
+        }
+
+        private readonly ApiContext _context;
+
+        public IEnumerable<CostumerOrder> GetAllData(int id)
+        {
+            var CostumerOrders = _context.CostumerOrder.Where(e => e.CostumerId == id).ToList();
+            return CostumerOrders;
         }
     }
 }

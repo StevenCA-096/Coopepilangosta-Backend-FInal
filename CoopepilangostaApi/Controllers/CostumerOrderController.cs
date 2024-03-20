@@ -22,6 +22,13 @@ namespace CoopepilangostaApi.Controllers
             _context = context;
         }
 
+        [Route("ByCostumer")]
+        [HttpGet]
+        public IEnumerable<CostumerOrder> GetAllData(int id)
+        {
+            return _costumerorderRepository.GetAllData(id);
+        }
+
         [HttpGet]
         public IEnumerable<CostumerOrder> Get()
         {        
